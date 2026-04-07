@@ -9,7 +9,8 @@ export const karrotChecklist: ChecklistPhase[] = [
       {
         id: "karrot-biz-account",
         label: "당근비즈니스 계정 생성",
-        description: "business.daangn.com 또는 당근앱 > 광고 메뉴에서 약관 동의",
+        description:
+          "당근앱 > 나의 당근 > 광고에서 약관 동의. 사업자등록번호 필수!",
       },
       {
         id: "karrot-biz-profile",
@@ -163,7 +164,7 @@ export const karrotChecklist: ChecklistPhase[] = [
         id: "karrot-bid",
         label: "입찰 방식 설정",
         description:
-          "자동 입찰 (클릭수 최대화) vs 수동 입찰 (CPC 직접 설정). 초보는 자동 추천",
+          "자동 입찰 (클릭수 최대화) vs 수동 입찰 (CPC 직접 설정). 최소 CPC 약 200원. 초보는 자동 추천",
       },
       {
         id: "karrot-schedule",
@@ -207,9 +208,9 @@ export const karrotChecklist: ChecklistPhase[] = [
       },
       {
         id: "karrot-payment-setup",
-        label: "결제 수단 등록",
+        label: "광고캐시 충전 (선불)",
         description:
-          "신용카드 또는 사업자 계좌. 광고비는 후불 정산 (집행 후 청구)",
+          "당근은 선불 캐시 충전 방식. 소액(10~30만원)부터 시작. 캐시 환불 불가 주의!",
       },
       {
         id: "karrot-go-live",
@@ -227,7 +228,7 @@ export const karrotChecklist: ChecklistPhase[] = [
         id: "karrot-check-metrics",
         label: "핵심 지표 확인 (노출수, 클릭수, CTR, CPC)",
         description:
-          "당근 광고 관리 대시보드에서 매일 확인. CTR 1% 이상이면 양호",
+          "매일 확인. CTR 1% 이상 양호. CPC 평균 300~600원 (서울/경기 기준)",
       },
       {
         id: "karrot-compare-creatives",
