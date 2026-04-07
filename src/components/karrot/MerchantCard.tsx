@@ -99,6 +99,7 @@ export default function MerchantCard({ merchant, onEdit, onDelete }: Props) {
   const st = statusConfig[merchant.status];
 
   return (
+    <>
     <div className="card card-interactive overflow-hidden">
       {/* Card Header */}
       <button onClick={() => setExpanded(!expanded)} className="w-full p-4 text-left">
@@ -197,39 +198,40 @@ export default function MerchantCard({ merchant, onEdit, onDelete }: Props) {
           {metrics.length > 0 && <Charts metrics={metrics} />}
         </div>
       )}
+    </div>
 
-      {/* Metric Input Modal */}
-      {showMetricModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ backgroundColor: "var(--color-bg-overlay)" }}>
-          <div className="w-full max-w-sm rounded-[var(--radius-2xl)] p-5" style={{ backgroundColor: "var(--color-bg-surface)", boxShadow: "var(--shadow-modal)" }}>
-            <h3 className="font-bold mb-4" style={{ color: "var(--color-text-primary)" }}>{showMetricModal}</h3>
-            <div className="space-y-3">
-              {[
-                { key: "adSpend", label: "광고비 (원)" },
-                { key: "dbCount", label: "DB 신청 수" },
-                { key: "approvedCount", label: "승인 수" },
-                { key: "revenue", label: "수익금 (원)" },
-                { key: "clicks", label: "클릭수" },
-              ].map((f) => (
-                <div key={f.key} className="flex items-center gap-3">
-                  <label className="text-xs font-medium w-24 flex-shrink-0" style={{ color: "var(--color-text-secondary)" }}>{f.label}</label>
-                  <input
-                    type="number"
-                    className="flex-1 rounded-[var(--radius-md)] px-3 py-2 text-sm focus:outline-none focus-ring"
-                    style={{ border: "1px solid var(--color-border-default)", fontFamily: "var(--font-mono)" }}
-                    value={(metricForm as Record<string, number | undefined>)[f.key] ?? ""}
-                    onChange={(e) => setMetricForm({ ...metricForm, [f.key]: e.target.value ? Number(e.target.value) : undefined })}
-                  />
-                </div>
-              ))}
-            </div>
-            <div className="flex gap-3 mt-5">
-              <button onClick={() => setShowMetricModal(null)} className="flex-1 py-2.5 rounded-[var(--radius-lg)] text-sm font-semibold" style={{ border: "1px solid var(--color-border-default)", color: "var(--color-text-secondary)" }}>취소</button>
-              <button onClick={saveMetricForm} className="flex-1 py-2.5 rounded-[var(--radius-lg)] text-sm font-semibold" style={{ backgroundColor: "var(--color-karrot)", color: "var(--color-text-on-orange)" }}>저장</button>
-            </div>
+    {/* Metric Input Modal — 카드 밖에 렌더링 (hover 충돌 방지) */}
+    {showMetricModal && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ backgroundColor: "var(--color-bg-overlay)" }}>
+        <div className="w-full max-w-sm rounded-[var(--radius-2xl)] p-5" style={{ backgroundColor: "var(--color-bg-surface)", boxShadow: "var(--shadow-modal)" }}>
+          <h3 className="font-bold mb-4" style={{ color: "var(--color-text-primary)" }}>{showMetricModal}</h3>
+          <div className="space-y-3">
+            {[
+              { key: "adSpend", label: "광고비 (원)" },
+              { key: "dbCount", label: "DB 신청 수" },
+              { key: "approvedCount", label: "승인 수" },
+              { key: "revenue", label: "수익금 (원)" },
+              { key: "clicks", label: "클릭수" },
+            ].map((f) => (
+              <div key={f.key} className="flex items-center gap-3">
+                <label className="text-xs font-medium w-24 flex-shrink-0" style={{ color: "var(--color-text-secondary)" }}>{f.label}</label>
+                <input
+                  type="number"
+                  className="flex-1 rounded-[var(--radius-md)] px-3 py-2 text-sm focus:outline-none focus-ring"
+                  style={{ border: "1px solid var(--color-border-default)", fontFamily: "var(--font-mono)" }}
+                  value={(metricForm as Record<string, number | undefined>)[f.key] ?? ""}
+                  onChange={(e) => setMetricForm({ ...metricForm, [f.key]: e.target.value ? Number(e.target.value) : undefined })}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="flex gap-3 mt-5">
+            <button onClick={() => setShowMetricModal(null)} className="flex-1 py-2.5 rounded-[var(--radius-lg)] text-sm font-semibold" style={{ border: "1px solid var(--color-border-default)", color: "var(--color-text-secondary)" }}>취소</button>
+            <button onClick={saveMetricForm} className="flex-1 py-2.5 rounded-[var(--radius-lg)] text-sm font-semibold" style={{ backgroundColor: "var(--color-karrot)", color: "var(--color-text-on-orange)" }}>저장</button>
           </div>
         </div>
-      )}
-    </div>
+      </div>
+    )}
+    </>
   );
 }
