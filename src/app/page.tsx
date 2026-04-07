@@ -35,34 +35,110 @@ export default function Home() {
   if (!mounted) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-gray-300 border-t-gray-900 rounded-full animate-spin" />
+        <div
+          className="w-8 h-8 rounded-full animate-spin"
+          style={{
+            border: "3px solid var(--color-border-default)",
+            borderTopColor: "var(--color-karrot)",
+          }}
+        />
       </div>
     );
   }
 
   return (
     <main className="max-w-2xl mx-auto px-4 py-8 w-full">
+      {/* Header */}
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Ad Checklist</h1>
-        <p className="text-gray-500 mt-1">
-          광고 돌리기 전에 빠뜨린 거 없나 확인하자
-        </p>
+        <div className="flex items-center gap-3 mb-1">
+          <div
+            className="w-10 h-10 rounded-[var(--radius-lg)] flex items-center justify-center"
+            style={{
+              backgroundColor: "var(--color-karrot)",
+              boxShadow: "var(--shadow-karrot)",
+            }}
+          >
+            <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+            </svg>
+          </div>
+          <div>
+            <h1
+              className="text-2xl font-extrabold tracking-tight"
+              style={{ color: "var(--color-text-primary)" }}
+            >
+              Ad Checklist
+            </h1>
+            <p
+              className="text-sm"
+              style={{ color: "var(--color-text-tertiary)" }}
+            >
+              광고 돌리기 전에 빠뜨린 거 없나 확인하자
+            </p>
+          </div>
+        </div>
       </header>
 
+      {/* New Campaign Button */}
       <button
         onClick={() => setShowModal(true)}
-        className="w-full py-3 px-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-gray-400 hover:text-gray-700 transition-colors mb-6 font-medium"
+        className="group w-full py-3.5 px-5 rounded-[var(--radius-xl)] font-semibold text-sm mb-6 flex items-center justify-center gap-2 transition-all"
+        style={{
+          backgroundColor: "var(--color-karrot)",
+          color: "var(--color-text-on-orange)",
+          boxShadow: "var(--shadow-karrot)",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = "var(--color-karrot-dark)";
+          e.currentTarget.style.transform = "translateY(-1px)";
+          e.currentTarget.style.boxShadow = "0 6px 20px rgba(255, 111, 15, 0.35)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = "var(--color-karrot)";
+          e.currentTarget.style.transform = "translateY(0)";
+          e.currentTarget.style.boxShadow = "var(--shadow-karrot)";
+        }}
+        onMouseDown={(e) => {
+          e.currentTarget.style.transform = "translateY(0) scale(0.985)";
+        }}
+        onMouseUp={(e) => {
+          e.currentTarget.style.transform = "translateY(-1px)";
+        }}
       >
-        + 새 캠페인 만들기
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+        </svg>
+        새 캠페인 만들기
       </button>
 
+      {/* Campaign List or Empty State */}
       {campaigns.length === 0 ? (
-        <div className="text-center py-16 text-gray-400">
-          <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-          </svg>
-          <p className="text-lg font-medium">아직 캠페인이 없어요</p>
-          <p className="text-sm mt-1">
+        <div className="text-center py-20">
+          <div
+            className="w-20 h-20 mx-auto mb-5 rounded-full flex items-center justify-center animate-float"
+            style={{ backgroundColor: "var(--color-karrot-subtle)" }}
+          >
+            <svg
+              className="w-10 h-10"
+              style={{ color: "var(--color-karrot-light)" }}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1.2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+            </svg>
+          </div>
+          <p
+            className="text-lg font-bold"
+            style={{ color: "var(--color-text-secondary)" }}
+          >
+            아직 캠페인이 없어요
+          </p>
+          <p
+            className="text-sm mt-1.5 leading-relaxed"
+            style={{ color: "var(--color-text-tertiary)" }}
+          >
             위 버튼을 눌러 첫 번째 광고 체크리스트를 시작하세요
           </p>
         </div>

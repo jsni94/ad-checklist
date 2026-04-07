@@ -25,23 +25,49 @@ export default function ChecklistPhase({
   const [expanded, setExpanded] = useState(!isComplete);
 
   return (
-    <div className="border border-gray-200 rounded-xl overflow-hidden">
+    <div
+      className="card overflow-hidden"
+    >
+      {/* Phase Header */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className={`w-full flex items-center justify-between p-4 text-left transition-colors ${
-          isComplete ? "bg-green-50" : "bg-gray-50 hover:bg-gray-100"
-        }`}
+        className="w-full flex items-center justify-between p-4 text-left transition-all"
+        style={{
+          backgroundColor: isComplete ? "var(--color-profit-bg)" : "var(--color-bg-base)",
+          transitionDuration: "var(--duration-normal)",
+        }}
+        onMouseEnter={(e) => {
+          if (!isComplete) {
+            e.currentTarget.style.backgroundColor = "var(--color-karrot-subtle)";
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (!isComplete) {
+            e.currentTarget.style.backgroundColor = "var(--color-bg-base)";
+          }
+        }}
       >
         <div className="flex items-center gap-3">
+          {/* Phase Number Circle */}
           <div
-            className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+            className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shrink-0 transition-all"
+            style={
               isComplete
-                ? "bg-green-500 text-white"
-                : "bg-gray-300 text-gray-600"
-            }`}
+                ? {
+                    backgroundColor: "var(--color-profit)",
+                    color: "white",
+                    transitionDuration: "var(--duration-normal)",
+                  }
+                : {
+                    backgroundColor: "var(--color-karrot)",
+                    color: "var(--color-text-on-orange)",
+                    boxShadow: "var(--shadow-karrot)",
+                    transitionDuration: "var(--duration-normal)",
+                  }
+            }
           >
             {isComplete ? (
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+              <svg className="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             ) : (
@@ -49,19 +75,36 @@ export default function ChecklistPhase({
             )}
           </div>
           <div>
-            <h3 className="font-bold text-gray-900">{phase.title}</h3>
-            <p className="text-sm text-gray-500">{phase.description}</p>
+            <h3
+              className="font-bold"
+              style={{ color: "var(--color-text-primary)" }}
+            >
+              {phase.title}
+            </h3>
+            <p
+              className="text-sm"
+              style={{ color: "var(--color-text-tertiary)" }}
+            >
+              {phase.description}
+            </p>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-sm text-gray-500">
+          <span
+            className="text-sm font-[family-name:var(--font-mono)] tabular-nums"
+            style={{ color: "var(--color-text-tertiary)" }}
+          >
             {phaseProgress.checked}/{phaseProgress.total}
           </span>
           <svg
-            className={`w-5 h-5 text-gray-400 transition-transform ${
-              expanded ? "rotate-180" : ""
-            }`}
+            className="w-5 h-5 transition-transform"
+            style={{
+              color: "var(--color-text-tertiary)",
+              transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
+              transitionDuration: "var(--duration-normal)",
+              transitionTimingFunction: "var(--ease-out-expo)",
+            }}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -72,8 +115,16 @@ export default function ChecklistPhase({
         </div>
       </button>
 
-      {expanded && (
-        <div className="p-4 space-y-2">
+      {/* Items */}
+      <div
+        style={{
+          display: expanded ? "block" : "none",
+        }}
+      >
+        <div
+          className="p-4 space-y-2"
+          style={{ borderTop: "1px solid var(--color-border-default)" }}
+        >
           {phase.items.map((item) => (
             <ChecklistItem
               key={item.id}
@@ -85,7 +136,7 @@ export default function ChecklistPhase({
             />
           ))}
         </div>
-      )}
+      </div>
     </div>
   );
 }
