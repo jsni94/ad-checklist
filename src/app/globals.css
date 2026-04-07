@@ -1,12 +1,291 @@
 @import "tailwindcss";
 
+/* ============================================================
+   AD-CHECKLIST DESIGN SYSTEM
+   당근마켓 CPA 제휴마케팅 관리 앱 — Design Tokens v1
+   Base: Karrot Orange #FF6F0F / Korean Modern / Warm Neutral
+   ============================================================ */
+
 :root {
-  --background: #f9fafb;
-  --foreground: #111827;
+  /* ─── Brand / Primary (Karrot Orange) ─────────────────────── */
+  --color-karrot: #FF6F0F;
+  --color-karrot-light: #FF8C3D;
+  --color-karrot-dark: #E05A00;
+  --color-karrot-subtle: #FFF3EB;
+  --color-karrot-muted: #FFE0CC;
+
+  /* ─── Semantic / Success (흑자) ───────────────────────────── */
+  --color-profit: #16A34A;          /* 수익 양수 */
+  --color-profit-light: #22C55E;
+  --color-profit-bg: #F0FDF4;
+  --color-profit-border: #BBF7D0;
+
+  /* ─── Semantic / Danger (적자) ────────────────────────────── */
+  --color-loss: #DC2626;            /* 손실 음수 */
+  --color-loss-light: #EF4444;
+  --color-loss-bg: #FEF2F2;
+  --color-loss-border: #FECACA;
+
+  /* ─── Semantic / Neutral Perf ─────────────────────────────── */
+  --color-breakeven: #78716C;       /* 손익분기 근접 */
+  --color-breakeven-bg: #F5F5F4;
+
+  /* ─── Background ──────────────────────────────────────────── */
+  --color-bg-base: #FAFAF9;         /* warm off-white (orange과 조화) */
+  --color-bg-surface: #FFFFFF;      /* 카드, 모달 */
+  --color-bg-elevated: #FFFFFF;     /* 드롭다운, 팝오버 */
+  --color-bg-overlay: rgba(0, 0, 0, 0.45);
+
+  /* ─── Foreground / Text ───────────────────────────────────── */
+  --color-text-primary: #1C1917;    /* stone-900 — warm black */
+  --color-text-secondary: #57534E;  /* stone-600 */
+  --color-text-tertiary: #A8A29E;   /* stone-400 */
+  --color-text-disabled: #D6D3D1;   /* stone-300 */
+  --color-text-on-orange: #FFFFFF;
+
+  /* ─── Border ──────────────────────────────────────────────── */
+  --color-border-default: #E7E5E4;  /* stone-200 */
+  --color-border-strong: #D6D3D1;   /* stone-300 */
+  --color-border-focus: #FF6F0F;    /* brand on focus */
+  --color-border-karrot-subtle: #FFD5B8;
+
+  /* ─── Platform badges ─────────────────────────────────────── */
+  --color-platform-facebook-bg: #EEF2FF;
+  --color-platform-facebook-text: #4338CA;
+  --color-platform-facebook-border: #C7D2FE;
+  --color-platform-karrot-bg: #FFF3EB;
+  --color-platform-karrot-text: #C2410C;
+  --color-platform-karrot-border: #FFD5B8;
+
+  /* ─── Shadows ─────────────────────────────────────────────── */
+  --shadow-xs: 0 1px 2px rgba(28, 25, 23, 0.05);
+  --shadow-sm: 0 1px 3px rgba(28, 25, 23, 0.08), 0 1px 2px rgba(28, 25, 23, 0.05);
+  --shadow-md: 0 4px 6px rgba(28, 25, 23, 0.07), 0 2px 4px rgba(28, 25, 23, 0.05);
+  --shadow-lg: 0 10px 15px rgba(28, 25, 23, 0.08), 0 4px 6px rgba(28, 25, 23, 0.04);
+  --shadow-xl: 0 20px 25px rgba(28, 25, 23, 0.10), 0 8px 10px rgba(28, 25, 23, 0.06);
+  --shadow-karrot: 0 4px 14px rgba(255, 111, 15, 0.25);
+  --shadow-modal: 0 25px 50px rgba(28, 25, 23, 0.22), 0 12px 24px rgba(28, 25, 23, 0.12);
+
+  /* ─── Border Radius ───────────────────────────────────────── */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+
+  /* ─── Spacing Scale ───────────────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+
+  /* ─── Typography ──────────────────────────────────────────── */
+  --font-sans: 'Pretendard Variable', 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'Noto Sans KR', ui-monospace, monospace;
+
+  /* ─── Motion ──────────────────────────────────────────────── */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 120ms;
+  --duration-normal: 220ms;
+  --duration-slow: 380ms;
+}
+
+/* ─── Base ─────────────────────────────────────────────────── */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Tailwind v4 Custom Utilities ─────────────────────────── */
+@utility card {
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+@utility card-interactive {
+  transition: box-shadow var(--duration-normal) var(--ease-out-expo),
+              transform var(--duration-normal) var(--ease-out-expo),
+              border-color var(--duration-normal);
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+    border-color: var(--color-border-strong);
+  }
+}
+
+/* Profit / Loss text colors */
+@utility text-profit { color: var(--color-profit); }
+@utility text-loss { color: var(--color-loss); }
+@utility text-breakeven { color: var(--color-breakeven); }
+
+/* Profit / Loss backgrounds */
+@utility bg-profit-subtle { background-color: var(--color-profit-bg); }
+@utility bg-loss-subtle { background-color: var(--color-loss-bg); }
+
+/* Platform badge utilities */
+@utility badge-facebook {
+  background-color: var(--color-platform-facebook-bg);
+  color: var(--color-platform-facebook-text);
+  border: 1px solid var(--color-platform-facebook-border);
+}
+@utility badge-karrot {
+  background-color: var(--color-platform-karrot-bg);
+  color: var(--color-platform-karrot-text);
+  border: 1px solid var(--color-platform-karrot-border);
+}
+
+/* Focus ring — brand orange */
+@utility focus-ring {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 111, 15, 0.25);
+}
+
+/* Shimmer skeleton animation */
+@utility skeleton {
+  background: linear-gradient(
+    90deg,
+    #F5F5F4 25%,
+    #EEEEEC 50%,
+    #F5F5F4 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.6s infinite;
+  border-radius: var(--radius-md);
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Progress bar track + fill */
+@utility progress-track {
+  height: 8px;
+  background-color: var(--color-border-default);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+/* Checkbox custom */
+@utility checkbox-base {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-border-strong);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color var(--duration-fast) var(--ease-out-expo),
+    border-color var(--duration-fast) var(--ease-out-expo),
+    transform var(--duration-fast) var(--ease-out-back);
+}
+
+/* Scroll snap for mobile calendar */
+@utility snap-x-mandatory {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+@utility snap-start { scroll-snap-align: start; }
+
+/* ─── Input / Select Reset ─────────────────────────────────── */
+input, select, textarea {
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+
+/* Number inputs — 숫자/금액은 mono */
+input[type="number"] {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Scrollbar (웹킷) ─────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-tertiary); }
+
+/* ─── Keyframe Animations ──────────────────────────────────── */
+
+/* 체크박스 체크마크 팝 */
+@keyframes check-pop {
+  0%   { transform: scale(0) rotate(-12deg); opacity: 0; }
+  55%  { transform: scale(1.3) rotate(4deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* 완료 배너 / 성공 상태 등장 */
+@keyframes slide-down-fade {
+  from { transform: translateY(-6px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* 모달 시트 올라오기 (모바일) */
+@keyframes sheet-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* 모달 오버레이 페이드인 */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* 빈 상태 일러스트 float */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+/* 프로그레스바 fill 등장 */
+@keyframes progress-fill {
+  from { width: 0; }
+}
+
+/* ─── Animation Utilities ──────────────────────────────────── */
+@utility animate-check-pop {
+  animation: check-pop 200ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@utility animate-slide-down {
+  animation: slide-down-fade 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@utility animate-sheet-up {
+  animation: sheet-up 300ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@utility animate-fade-in {
+  animation: fade-in 150ms ease both;
+}
+@utility animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ─── Reduced Motion ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
