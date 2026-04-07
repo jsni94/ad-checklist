@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { Campaign } from "@/lib/storage";
 import { facebookChecklist } from "@/data/facebook-checklist";
+import { karrotChecklist } from "@/data/karrot-checklist";
 
 interface CampaignCardProps {
   campaign: Campaign;
@@ -11,7 +12,7 @@ interface CampaignCardProps {
 
 const platformLabels: Record<Campaign["platform"], string> = {
   facebook: "Facebook/Instagram",
-  karrot: "Karrot (Coming Soon)",
+  karrot: "당근",
   youtube: "YouTube (Coming Soon)",
 };
 
@@ -23,7 +24,7 @@ const platformColors: Record<Campaign["platform"], string> = {
 
 export default function CampaignCard({ campaign, onDelete }: CampaignCardProps) {
   const phases =
-    campaign.platform === "facebook" ? facebookChecklist : facebookChecklist;
+    campaign.platform === "karrot" ? karrotChecklist : facebookChecklist;
   const totalItems = phases.reduce((sum, p) => sum + p.items.length, 0);
   const checkedCount = Object.values(campaign.checkedItems).filter(Boolean).length;
   const progress = totalItems > 0 ? Math.round((checkedCount / totalItems) * 100) : 0;

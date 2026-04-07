@@ -56,7 +56,7 @@ export default function NewCampaignModal({
               {(
                 [
                   { key: "facebook" as const, label: "Facebook", disabled: false },
-                  { key: "karrot" as const, label: "당근", disabled: true },
+                  { key: "karrot" as const, label: "당근", disabled: false },
                   { key: "youtube" as const, label: "YouTube", disabled: true },
                 ]
               ).map((p) => (
@@ -69,7 +69,9 @@ export default function NewCampaignModal({
                     p.disabled
                       ? "border-gray-100 text-gray-300 cursor-not-allowed bg-gray-50"
                       : platform === p.key
-                      ? "border-blue-500 bg-blue-50 text-blue-700"
+                      ? platform === "karrot"
+                        ? "border-orange-500 bg-orange-50 text-orange-700"
+                        : "border-blue-500 bg-blue-50 text-blue-700"
                       : "border-gray-200 text-gray-600 hover:border-gray-300"
                   }`}
                 >

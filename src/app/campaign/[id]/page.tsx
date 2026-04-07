@@ -3,9 +3,16 @@
 import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { facebookChecklist } from "@/data/facebook-checklist";
+import { karrotChecklist } from "@/data/karrot-checklist";
 import { useChecklist } from "@/hooks/useChecklist";
+import { getCampaign } from "@/lib/storage";
 import ProgressBar from "@/components/ProgressBar";
 import ChecklistPhase from "@/components/ChecklistPhase";
+
+function getChecklistForPlatform(platform: string) {
+  if (platform === "karrot") return karrotChecklist;
+  return facebookChecklist;
+}
 
 export default function CampaignPage({
   params,
@@ -14,12 +21,15 @@ export default function CampaignPage({
 }) {
   const { id } = use(params);
   const [mounted, setMounted] = useState(false);
+  const [platform, setPlatform] = useState<string>("facebook");
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    const c = getCampaign(id);
+    if (c) setPlatform(c.platform);
+  }, [id]);
 
-  const phases = facebookChecklist;
+  const phases = getChecklistForPlatform(platform);
   const {
     campaign,
     toggleItem,
