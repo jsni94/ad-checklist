@@ -8,6 +8,10 @@ import { useChecklist } from "@/hooks/useChecklist";
 import { getCampaign } from "@/lib/storage";
 import ProgressBar from "@/components/ProgressBar";
 import ChecklistPhase from "@/components/ChecklistPhase";
+import KarrotTabs, { type KarrotTabId } from "@/components/karrot/KarrotTabs";
+import KarrotCampaigns from "@/components/karrot/KarrotCampaigns";
+import KarrotDashboard from "@/components/karrot/KarrotDashboard";
+import KarrotCalculator from "@/components/karrot/KarrotCalculator";
 
 function getChecklistForPlatform(platform: string) {
   if (platform === "karrot") return karrotChecklist;
@@ -22,6 +26,7 @@ export default function CampaignPage({
   const { id } = use(params);
   const [mounted, setMounted] = useState(false);
   const [platform, setPlatform] = useState<string>("facebook");
+  const [activeTab, setActiveTab] = useState<KarrotTabId>("checklist");
 
   useEffect(() => {
     setMounted(true);
@@ -59,25 +64,10 @@ export default function CampaignPage({
     );
   }
 
-  return (
-    <main className="max-w-2xl mx-auto px-4 py-8 w-full">
-      <div className="mb-6">
-        <Link
-          href="/"
-          className="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1 mb-3"
-        >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-          목록으로
-        </Link>
+  const isKarrot = campaign.platform === "karrot";
 
-        <h1 className="text-2xl font-bold text-gray-900">{campaign.name}</h1>
-        <p className="text-sm text-gray-400 mt-0.5">
-          {new Date(campaign.createdAt).toLocaleDateString("ko-KR")} 생성
-        </p>
-      </div>
-
+  const renderChecklist = () => (
+    <>
       <div className="sticky top-0 z-10 bg-[#f9fafb] py-3 mb-4">
         <ProgressBar
           progress={progress}
@@ -88,12 +78,8 @@ export default function CampaignPage({
 
       {progress === 100 && (
         <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-4 text-center">
-          <p className="text-green-700 font-bold text-lg">
-            모든 준비 완료!
-          </p>
-          <p className="text-green-600 text-sm mt-1">
-            광고 집행 시작하세요
-          </p>
+          <p className="text-green-700 font-bold text-lg">모든 준비 완료!</p>
+          <p className="text-green-600 text-sm mt-1">광고 집행 시작하세요</p>
         </div>
       )}
 
@@ -110,6 +96,43 @@ export default function CampaignPage({
           />
         ))}
       </div>
+    </>
+  );
+
+  return (
+    <main className="max-w-2xl mx-auto px-4 py-8 w-full">
+      <div className="mb-4">
+        <Link
+          href="/"
+          className="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1 mb-3"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+          목록으로
+        </Link>
+
+        <h1 className="text-2xl font-bold text-gray-900">{campaign.name}</h1>
+        <p className="text-sm text-gray-400 mt-0.5">
+          {new Date(campaign.createdAt).toLocaleDateString("ko-KR")} 생성
+        </p>
+      </div>
+
+      {isKarrot ? (
+        <>
+          <KarrotTabs activeTab={activeTab} onTabChange={setActiveTab} />
+          {activeTab === "checklist" && renderChecklist()}
+          {activeTab === "campaigns" && (
+            <KarrotCampaigns campaignId={id} />
+          )}
+          {activeTab === "dashboard" && (
+            <KarrotDashboard campaignId={id} />
+          )}
+          {activeTab === "calculator" && <KarrotCalculator />}
+        </>
+      ) : (
+        renderChecklist()
+      )}
     </main>
   );
 }
